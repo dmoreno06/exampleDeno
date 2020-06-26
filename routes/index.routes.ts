@@ -5,7 +5,7 @@ import * as indexCtrollers from '../controllers/index.controllers.ts';
 const router = new Router();
 
 router.get('/', ({response}) => {
-    response.body = "Hello Globant"
+    response.body = "Welcome to Deno.js"
 });
 
 router.get('/employees',indexCtrollers.getEmployees);
