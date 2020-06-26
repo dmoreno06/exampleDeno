@@ -1,7 +1,6 @@
 import { Request,Response, Body} from "https://deno.land/x/oak/mod.ts";
-//generar un id
-import { v4 } from "https://deno.land/std/uuid/mod.ts";//generador de ids
-//interface de usuarios
+import { v4 } from "https://deno.land/std/uuid/mod.ts";
+//interface de employees
 interface Employee{
     id: string;
     name: string;
@@ -10,19 +9,19 @@ interface Employee{
 };
 let employees: Employee[] = [{
     id:"1",
-    name: "Ryan Ray",// creador de de deno
+    name: "Ryan Ray",
     dni: "123",
     salary: 400000
 },
 {
     id:"2",
-    name: "Anders Hejlsberg", //creador de typescrip
+    name: "Anders Hejlsberg", 
     dni: "1235",
     salary: 300000
 },
 {
     id:"3",
-    name: "Brendan Eich",// creador de javascript
+    name: "Brendan Eich",
     dni: "1234",
     salary: 600000
 }
@@ -74,7 +73,7 @@ export const postCreateEmployee = async ({
     }else{
         const newEmployee = body.value;
         newEmployee.id = v4.generate();
-        employees.push(newEmployee)//agregeme este nuevo empleado
+        employees.push(newEmployee)
         response.status= 200;
         response.body = {
         message: "New push created",
@@ -99,22 +98,19 @@ export const putUpdateEmployee = async ({
             message: "Employee not found"
         };
     } else {
-        const bodyEmployee = await request.body();//guardamos el dato que obtivimos del request bady
-        //y lo guardamos en un objeto llamado  bodyEmployee 
+        const bodyEmployee = await request.body();
         const updateEmployee = bodyEmployee.value;
-
         employees = employees.map((employee) => 
         employee.id === params.id ?
         { ...employee, ...updateEmployee}: employee
-        );//recorrer los usuarios 
-        //y cuando un usuario sea igual a el parametrp
+        );
         response.status = 200;
         response.body = {
             updateEmployee,
         };
     }
 };
-//delete user
+//delete employee
 export const deleteEmployee = ({params, response}: {params: {id: string}, response: Response
 }) => {
     employees = employees.filter(employee => employee.id !== params.id)
